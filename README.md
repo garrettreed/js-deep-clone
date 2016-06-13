@@ -1,4 +1,5 @@
 # js-deep-clone
+
 JavaScript object/array deep cloner implemented in ES5
 
 ## Usage
@@ -23,5 +24,12 @@ var deepObject = {
     ten: 10.2
 };
 
-var clone = deepClone({}, one);
+var clone = deepClone({}, deepObject);
 ```
+
+## TODO
+
+- Make prototype inheritance optional
+- Add tests
+- Type check params, add errors
+- Global name check, add errors

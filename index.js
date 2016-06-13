@@ -1,32 +1,21 @@
-/**
- * Deep clone an Object
- * Follows es5 specs
- * @author Garrett Reed<garrett@garrettreed.co>
- * 
- * Primitives:
- *     null
- *     string
- *     number
- *     function (inherits prototype)
- * Collections:
- *     object
- *     array
+/*
+ * deep-clone
+ * @author Garrett Reed <garrett@garrettreed.co> 2016
+ * MIT Licensed
  *
- * TODOs:
- *     - Make prototype inheritance optional
- *     - Add tests
- *     - Type check params, add errors
- *     - Global name check, add errors
+ * Suports:
+ *   Primitives: null, string, number, function (inherits prototype)
+ *   Collections: object, array
  *
- * @param {object}       [target]  [receiving object]
- * @param {object/array} [obj]     [object to clone]
- * 
- * @return {object/array} [the clone]
+ * @param {object} target Receiving object
+ * @param {object/array} obj Object to clone
+ * @return {object/array} the clone
  * 
  */
 var deepClone = (function() {
+    'use strict';
 
-    function isPrimitive(value) {
+    var _isPrimitive = function(value) {
         if (value === null) {
             return true;
         }
@@ -41,28 +30,29 @@ var deepClone = (function() {
             default:
                 return false;
         }
-    }
+    };
 
-    function isArray(value) {
+    var _isArray = function(value) {
         return Object.prototype.toString.call(value) === '[object Array]';
-    }
+    };
 
-    return function(target, obj) {
+    var _clone = function(target, obj) {
         for (var key in obj) {
-            if (isPrimitive(obj[key])) {
+            if (_isPrimitive(obj[key])) {
                 target[key] = obj[key];
                 if (typeof target[key] === 'function') {
                     target[key].prototype = Object.create(obj[key].prototype);
                 }
-            } else if (isArray(obj[key])) {
+            } else if (_isArray(obj[key])) {
                 target[key] = [];
                 deepClone(target[key], obj[key]);
             } else {
                 target[key] = Object.create(Object.getPrototypeOf(obj[key]));
-                deepClone(target[key], obj[key]);
+                _clone(target[key], obj[key]);
             }
         }
         return target;
     };
-})();
 
+    return _clone;
+})();
