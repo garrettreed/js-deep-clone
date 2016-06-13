@@ -15,6 +15,8 @@
  * TODOs:
  *     - Make prototype inheritance optional
  *     - Add tests
+ *     - Type check params, add errors
+ *     - Global name check, add errors
  *
  * @param {object}       [target]  [receiving object]
  * @param {object/array} [obj]     [object to clone]
