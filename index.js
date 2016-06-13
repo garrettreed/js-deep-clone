@@ -45,7 +45,7 @@ var deepClone = (function() {
                 }
             } else if (_isArray(obj[key])) {
                 target[key] = [];
-                deepClone(target[key], obj[key]);
+                _clone(target[key], obj[key]);
             } else {
                 target[key] = Object.create(Object.getPrototypeOf(obj[key]));
                 _clone(target[key], obj[key]);
